@@ -1,0 +1,34 @@
+name: Typecheck
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  typecheck-schema:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: cd packages/schema && npm ci && npm run build
+
+  typecheck-builder:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: cd packages/builder && npm ci && npm run typecheck
+
+  typecheck-collaboration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: cd packages/collaboration && npm ci && npm run typecheck

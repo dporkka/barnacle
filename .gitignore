@@ -24,6 +24,14 @@ profile.cov
 go.work
 go.work.sum
 
+# Node / build artifacts
+node_modules/
+dist/
+.wrangler/
+*.local
+.env.*
+!.env.example
+
 # env file
 .env
 
