@@ -1,0 +1,13 @@
+{{/*
+  nodes/paragraph.html — renders a PageNode of type "paragraph".
+
+  props:
+    text (string) — paragraph content (HTML-escaped)
+*/}}
+{{- $node  := .node -}}
+{{- $props := $node.props -}}
+
+{{- $text := "" -}}
+{{- with $props.text -}}{{- $text = . -}}{{- end -}}
+
+<p id="{{ $node.id }}">{{ $text | htmlEscape }}</p>

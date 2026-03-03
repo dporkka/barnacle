@@ -1,0 +1,17 @@
+{{ define "main" }}
+  <article class="pg-single">
+    {{- /* If the page carries a pagegraph in its front matter, render it. */}}
+    {{- with .Params.pagegraph }}
+      {{ partial "pagegraph.html" . }}
+    {{- else }}
+      {{- /* Fall back to standard Hugo Markdown content. */}}
+      {{ .Content }}
+    {{- end }}
+  </article>
+{{ end }}
+
+{{ define "styles" }}
+  {{- with .Params.pagegraph }}
+    {{ partial "emit-styles.html" . }}
+  {{- end }}
+{{ end }}

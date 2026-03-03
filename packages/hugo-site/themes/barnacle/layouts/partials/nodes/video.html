@@ -1,0 +1,35 @@
+{{/*
+  nodes/video.html — renders a PageNode of type "video".
+
+  props:
+    src     (string)  — video URL (direct link or "asset:<id>")
+    poster  (string)  — optional poster image URL
+    width   (integer) — optional pixel width
+    height  (integer) — optional pixel height
+    autoplay (bool)   — if true, add autoplay + muted attributes
+    loop    (bool)    — if true, loop the video
+*/}}
+{{- $node  := .node -}}
+{{- $graph := .graph -}}
+{{- $props := $node.props -}}
+
+{{- $src := "" -}}
+{{- with $props.src -}}
+  {{- $src = . -}}
+  {{- if hasPrefix $src "asset:" -}}
+    {{- $assetID := strings.TrimPrefix "asset:" $src -}}
+    {{- $asset   := index $graph.assets $assetID -}}
+    {{- if $asset -}}{{- $src = $asset.url -}}{{- end -}}
+  {{- end -}}
+{{- end -}}
+
+<video id="{{ $node.id }}"
+  src="{{ $src | htmlEscape }}"
+  {{- with $props.poster  }} poster="{{ . | htmlEscape }}"{{ end }}
+  {{- with $props.width   }} width="{{ . }}"{{ end }}
+  {{- with $props.height  }} height="{{ . }}"{{ end }}
+  {{- if $props.autoplay  }} autoplay muted{{ end }}
+  {{- if $props.loop      }} loop{{ end }}
+  controls>
+  Your browser does not support the video element.
+</video>

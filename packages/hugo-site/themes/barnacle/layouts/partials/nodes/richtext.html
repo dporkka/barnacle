@@ -1,0 +1,15 @@
+{{/*
+  nodes/richtext.html — renders a PageNode of type "richtext".
+
+  props:
+    html (string) — trusted HTML content stored in the PageGraph.
+                    Content is emitted with safeHTML — ensure the source
+                    is always author-controlled, never user-supplied.
+*/}}
+{{- $node  := .node -}}
+{{- $props := $node.props -}}
+
+{{- $html := "" -}}
+{{- with $props.html -}}{{- $html = . -}}{{- end -}}
+
+<div id="{{ $node.id }}" class="pg-richtext">{{ $html | safeHTML }}</div>

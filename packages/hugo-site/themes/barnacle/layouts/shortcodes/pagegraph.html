@@ -1,0 +1,41 @@
+{{/*
+  shortcodes/pagegraph.html — Hugo shortcode that loads a PageGraph JSON data
+  file and renders it using the pagegraph partial.
+
+  Usage in Markdown:
+    {{< pagegraph src="pagegraphs/sample.json" >}}
+
+  The `src` parameter is a path relative to the Hugo `data/` directory
+  (Hugo's data files) OR relative to `content/` when used with
+  `os.ReadFile` (requires Hugo 0.91+).
+
+  This shortcode uses Hugo's `site.Data` map, so place your JSON files under
+  `data/pagegraphs/<name>.json` and reference them as:
+    {{< pagegraph src="pagegraphs/sample" >}}
+  (no .json extension needed for data files).
+*/}}
+{{- $src := .Get "src" -}}
+{{- if not $src -}}
+  {{ errorf "pagegraph shortcode: 'src' parameter is required" }}
+{{- end -}}
+
+{{- /* Attempt to load from Hugo data directory (no extension). */}}
+{{- $parts := split $src "/" -}}
+{{- $graph  := index .Site.Data $src -}}
+
+{{- /* Walk nested keys if src contains slashes (e.g. "pagegraphs/sample"). */}}
+{{- if not $graph -}}
+  {{- $data := .Site.Data -}}
+  {{- range $parts -}}
+    {{- if $data -}}
+      {{- $data = index $data . -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $graph = $data -}}
+{{- end -}}
+
+{{- if not $graph -}}
+  {{ errorf "pagegraph shortcode: could not load data file '%s'" $src }}
+{{- end -}}
+
+{{ partial "pagegraph.html" $graph }}

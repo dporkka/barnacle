@@ -1,0 +1,28 @@
+{{/*
+  nodes/heading.html — renders a PageNode of type "heading".
+
+  props:
+    level  (integer 1-6, default 2) — maps to <h1>…<h6>
+    text   (string)                  — heading content (HTML-escaped)
+*/}}
+{{- $node  := .node -}}
+{{- $props := $node.props -}}
+
+{{- $level := 2 -}}
+{{- with $props.level -}}
+  {{- $level = int . -}}
+{{- end -}}
+{{- if or (lt $level 1) (gt $level 6) -}}
+  {{- $level = 2 -}}
+{{- end -}}
+
+{{- $text := "" -}}
+{{- with $props.text -}}{{- $text = . -}}{{- end -}}
+
+{{- if eq $level 1 -}}<h1 id="{{ $node.id }}">{{ $text | htmlEscape }}</h1>
+{{- else if eq $level 2 -}}<h2 id="{{ $node.id }}">{{ $text | htmlEscape }}</h2>
+{{- else if eq $level 3 -}}<h3 id="{{ $node.id }}">{{ $text | htmlEscape }}</h3>
+{{- else if eq $level 4 -}}<h4 id="{{ $node.id }}">{{ $text | htmlEscape }}</h4>
+{{- else if eq $level 5 -}}<h5 id="{{ $node.id }}">{{ $text | htmlEscape }}</h5>
+{{- else -}}<h6 id="{{ $node.id }}">{{ $text | htmlEscape }}</h6>
+{{- end -}}

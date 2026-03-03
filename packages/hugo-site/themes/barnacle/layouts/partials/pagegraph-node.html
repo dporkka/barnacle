@@ -1,0 +1,29 @@
+{{/*
+  pagegraph-node.html — dispatch a single PageNode to its type-specific partial.
+
+  Context dict keys:
+    node    — the PageNode object
+    nodeMap — map[id]PageNode for the whole document
+    graph   — the root PageGraph object (needed for style/asset lookups)
+
+  Node types map 1-to-1 to partials under partials/nodes/<type>.html.
+  Unknown types are silently skipped to stay forward-compatible.
+*/}}
+{{- $node    := .node -}}
+{{- $nodeMap := .nodeMap -}}
+{{- $graph   := .graph -}}
+{{- $ctx     := dict "node" $node "nodeMap" $nodeMap "graph" $graph -}}
+
+{{- $type := $node.type -}}
+
+{{- if eq $type "section"   -}}{{ partial "nodes/section.html"   $ctx }}
+{{- else if eq $type "container" -}}{{ partial "nodes/container.html" $ctx }}
+{{- else if eq $type "heading"   -}}{{ partial "nodes/heading.html"   $ctx }}
+{{- else if eq $type "paragraph" -}}{{ partial "nodes/paragraph.html" $ctx }}
+{{- else if eq $type "image"     -}}{{ partial "nodes/image.html"     $ctx }}
+{{- else if eq $type "video"     -}}{{ partial "nodes/video.html"     $ctx }}
+{{- else if eq $type "button"    -}}{{ partial "nodes/button.html"    $ctx }}
+{{- else if eq $type "divider"   -}}{{ partial "nodes/divider.html"   $ctx }}
+{{- else if eq $type "richtext"  -}}{{ partial "nodes/richtext.html"  $ctx }}
+{{- else if eq $type "columns"   -}}{{ partial "nodes/columns.html"   $ctx }}
+{{- end -}}

@@ -1,0 +1,205 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "forge.pagegraph.v1",
+    "title": "PageGraph",
+    "description": "Barnacle CMS PageGraph document — a declarative, serialisable page description.",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["id", "version", "meta", "nodes", "styles", "assets"],
+    "properties": {
+        "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Unique identifier for this PageGraph document (UUID v4)."
+        },
+        "version": {
+            "type": "string",
+            "const": "1",
+            "description": "Schema version — always '1' for this revision."
+        },
+        "meta": {
+            "$ref": "#/$defs/PageMeta"
+        },
+        "nodes": {
+            "type": "array",
+            "description": "Ordered list of all PageNode objects that make up the page tree.",
+            "items": {
+                "$ref": "#/$defs/PageNode"
+            }
+        },
+        "styles": {
+            "type": "object",
+            "description": "Named style definitions keyed by style ID.",
+            "additionalProperties": {
+                "$ref": "#/$defs/StyleDef"
+            }
+        },
+        "assets": {
+            "type": "object",
+            "description": "Named asset definitions keyed by asset ID.",
+            "additionalProperties": {
+                "$ref": "#/$defs/AssetDef"
+            }
+        }
+    },
+    "$defs": {
+        "PageMeta": {
+            "type": "object",
+            "description": "Page-level metadata.",
+            "additionalProperties": false,
+            "required": ["title", "slug"],
+            "properties": {
+                "title": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Human-readable page title."
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Short page description used in meta tags."
+                },
+                "slug": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                    "description": "URL slug — lowercase alphanumeric with hyphens."
+                },
+                "lang": {
+                    "type": "string",
+                    "default": "en",
+                    "description": "BCP-47 language tag (e.g. 'en', 'fr', 'pt-BR')."
+                },
+                "publishedAt": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "ISO 8601 publish timestamp."
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "ISO 8601 last-updated timestamp."
+                }
+            }
+        },
+        "PageNode": {
+            "type": "object",
+            "description": "A single renderable node in the page tree.",
+            "additionalProperties": false,
+            "required": ["id", "type", "props", "children", "styleRefs", "parentId"],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Node identifier — unique within this document."
+                },
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "section",
+                        "container",
+                        "heading",
+                        "paragraph",
+                        "image",
+                        "video",
+                        "button",
+                        "richtext",
+                        "columns",
+                        "divider"
+                    ],
+                    "description": "Semantic node type that drives rendering."
+                },
+                "props": {
+                    "type": "object",
+                    "description": "Arbitrary node-type-specific properties (text, src, level, href, …).",
+                    "additionalProperties": true
+                },
+                "children": {
+                    "type": "array",
+                    "description": "Ordered list of child node IDs.",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "styleRefs": {
+                    "type": "array",
+                    "description": "IDs of StyleDef entries that apply to this node.",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "parentId": {
+                    "description": "ID of the parent node, or null for root-level nodes.",
+                    "oneOf": [
+                        { "type": "string" },
+                        { "type": "null" }
+                    ]
+                }
+            }
+        },
+        "StyleDef": {
+            "type": "object",
+            "description": "A reusable style definition that maps to a CSS class.",
+            "additionalProperties": false,
+            "required": ["id", "className", "css"],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique style identifier referenced from PageNode.styleRefs."
+                },
+                "className": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "CSS class name emitted into the rendered HTML."
+                },
+                "css": {
+                    "type": "object",
+                    "description": "CSS property/value pairs (camelCase keys, string values).",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "AssetDef": {
+            "type": "object",
+            "description": "A referenced media asset (image, video, font, …).",
+            "additionalProperties": false,
+            "required": ["id", "url", "mimeType", "hash"],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique asset identifier."
+                },
+                "url": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "Fully-qualified or root-relative URL of the asset."
+                },
+                "mimeType": {
+                    "type": "string",
+                    "description": "MIME type (e.g. 'image/png', 'video/mp4')."
+                },
+                "hash": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Content hash for cache-busting (hex or base64)."
+                },
+                "width": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "description": "Pixel width — only meaningful for image/video assets."
+                },
+                "height": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "description": "Pixel height — only meaningful for image/video assets."
+                },
+                "alt": {
+                    "type": "string",
+                    "description": "Accessibility alt text for image assets."
+                }
+            }
+        }
+    }
+}

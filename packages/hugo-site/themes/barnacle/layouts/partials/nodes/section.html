@@ -1,0 +1,28 @@
+{{/*
+  nodes/section.html — renders a PageNode of type "section".
+
+  Emits a semantic <section> element.  styleRefs are resolved to CSS class
+  names from graph.styles and applied to the class attribute.
+*/}}
+{{- $node    := .node -}}
+{{- $nodeMap := .nodeMap -}}
+{{- $graph   := .graph -}}
+
+{{- /* Resolve styleRefs → space-separated class list. */}}
+{{- $classes := slice -}}
+{{- range $node.styleRefs -}}
+  {{- $style := index $graph.styles . -}}
+  {{- if $style -}}
+    {{- $classes = append $style.className $classes -}}
+  {{- end -}}
+{{- end -}}
+{{- $classAttr := delimit $classes " " -}}
+
+<section id="{{ $node.id }}"{{ with $classAttr }} class="{{ . }}"{{ end }}>
+  {{- range $node.children -}}
+    {{- $child := index $nodeMap . -}}
+    {{- if $child -}}
+      {{- partial "pagegraph-node.html" (dict "node" $child "nodeMap" $nodeMap "graph" $graph) -}}
+    {{- end -}}
+  {{- end -}}
+</section>
