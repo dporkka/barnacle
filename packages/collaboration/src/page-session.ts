@@ -34,7 +34,7 @@ interface SessionState {
 export class PageSession implements DurableObject {
   private state: SessionState
 
-  constructor(private ctx: DurableObjectState, private env: Env) {
+  constructor(private ctx: DurableObjectState, _env: Env) {
     const doc = new Y.Doc()
     this.state = {
       clients: new Map(),

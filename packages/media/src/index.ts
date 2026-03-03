@@ -30,8 +30,7 @@ function requireBearer(request: Request, env: Env): boolean {
 
 async function hashKey(assetId: string): Promise<string> {
   const enc = new TextEncoder()
-  const ts = Date.now().toString()
-  const buf = await crypto.subtle.digest('SHA-256', enc.encode(assetId + ts))
+  const buf = await crypto.subtle.digest('SHA-256', enc.encode(assetId))
   return Array.from(new Uint8Array(buf))
     .map((b) => b.toString(16).padStart(2, '0'))
     .join('')

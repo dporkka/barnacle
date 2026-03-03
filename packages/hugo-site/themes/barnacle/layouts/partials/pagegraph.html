@@ -23,7 +23,7 @@
 {{- $roots := slice -}}
 {{- range $nodes -}}
   {{- if or (not (isset . "parentId")) (eq .parentId nil) (eq .parentId "") -}}
-    {{- $roots = append . $roots -}}
+    {{- $roots = append $roots . -}}
   {{- end -}}
 {{- end -}}
 
