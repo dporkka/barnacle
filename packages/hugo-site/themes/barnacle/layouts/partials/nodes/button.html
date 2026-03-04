@@ -1,0 +1,29 @@
+{{/*
+  nodes/button.html — renders a PageNode of type "button".
+
+  When props.href is provided an <a> element is emitted (link-style button).
+  Otherwise a <button> element is emitted (purely visual / JS-driven).
+
+  props:
+    label  (string)  — visible button text
+    href   (string)  — optional navigation target (makes this a link)
+    target (string)  — optional link target (_blank, _self, …)
+*/}}
+{{- $node  := .node -}}
+{{- $props := $node.props -}}
+
+{{- $label  := "" -}}
+{{- with $props.label  -}}{{- $label  = . -}}{{- end -}}
+
+{{- $href := "" -}}
+{{- with $props.href -}}{{- $href = . -}}{{- end -}}
+
+{{- if $href -}}
+  <a id="{{ $node.id }}"
+    href="{{ $href | htmlEscape }}"
+    class="pg-btn"
+    {{- with $props.target }} target="{{ . | htmlEscape }}" rel="noopener noreferrer"{{ end -}}
+  >{{ $label | htmlEscape }}</a>
+{{- else -}}
+  <button id="{{ $node.id }}" class="pg-btn" type="button">{{ $label | htmlEscape }}</button>
+{{- end -}}

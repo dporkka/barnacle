@@ -1,0 +1,23 @@
+name: Validate PageGraph
+
+on:
+  pull_request:
+    paths:
+      - 'content/pagegraphs/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install schema package
+        run: cd packages/schema && npm ci
+      - name: Validate all PageGraph files
+        run: |
+          for f in content/pagegraphs/*.json; do
+            echo "Validating $f..."
+            cd packages/schema && npx ts-node src/validate.ts "../../$f"
+          done

@@ -1,0 +1,33 @@
+{{/*
+  pagegraph.html — root partial for rendering a PageGraph document.
+
+  Expects a PageGraph object (decoded from front matter or a data file).
+
+  Algorithm:
+    1. Build a lookup map of nodes keyed by ID.
+    2. Find all root-level nodes (parentId == null / absent).
+    3. Dispatch each root node to the appropriate node-type partial.
+       Child rendering is recursive — each node partial calls this partial
+       again with a filtered sub-graph containing only that node's children.
+*/}}
+{{- $graph := . -}}
+{{- $nodes  := $graph.nodes -}}
+
+{{- /* Build an id→node lookup dict using Hugo's scratch or a range trick. */}}
+{{- $nodeMap := dict -}}
+{{- range $nodes -}}
+  {{- $nodeMap = merge $nodeMap (dict .id .) -}}
+{{- end -}}
+
+{{- /* Collect root nodes (parentId absent, null, or empty string). */}}
+{{- $roots := slice -}}
+{{- range $nodes -}}
+  {{- if or (not (isset . "parentId")) (eq .parentId nil) (eq .parentId "") -}}
+    {{- $roots = append $roots . -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Render each root node. */}}
+{{- range $roots -}}
+  {{- partial "pagegraph-node.html" (dict "node" . "nodeMap" $nodeMap "graph" $graph) -}}
+{{- end -}}

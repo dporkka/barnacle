@@ -1,0 +1,27 @@
+{{/*
+  nodes/container.html — renders a PageNode of type "container".
+
+  Emits a generic <div> wrapper.  styleRefs → CSS classes; children are
+  rendered recursively.
+*/}}
+{{- $node    := .node -}}
+{{- $nodeMap := .nodeMap -}}
+{{- $graph   := .graph -}}
+
+{{- $classes := slice -}}
+{{- range $node.styleRefs -}}
+  {{- $style := index $graph.styles . -}}
+  {{- if $style -}}
+    {{- $classes = append $style.className $classes -}}
+  {{- end -}}
+{{- end -}}
+{{- $classAttr := delimit $classes " " -}}
+
+<div id="{{ $node.id }}"{{ with $classAttr }} class="{{ . }}"{{ end }}>
+  {{- range $node.children -}}
+    {{- $child := index $nodeMap . -}}
+    {{- if $child -}}
+      {{- partial "pagegraph-node.html" (dict "node" $child "nodeMap" $nodeMap "graph" $graph) -}}
+    {{- end -}}
+  {{- end -}}
+</div>

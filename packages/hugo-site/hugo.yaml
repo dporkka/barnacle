@@ -1,0 +1,7 @@
+baseURL: "https://example.com/"
+languageCode: "en-us"
+title: "Barnacle Site"
+theme: "barnacle"
+enableRobotsTXT: true
+params:
+  description: "Built with barnacle CMS"

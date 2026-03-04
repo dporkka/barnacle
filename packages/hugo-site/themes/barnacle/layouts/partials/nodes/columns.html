@@ -1,0 +1,27 @@
+{{/*
+  nodes/columns.html — renders a PageNode of type "columns".
+
+  Emits a CSS-grid / flexbox column wrapper.  Each direct child node
+  occupies one column.
+
+  props:
+    gap (string) — optional CSS gap value (e.g. "1rem"), default "1rem"
+*/}}
+{{- $node    := .node -}}
+{{- $nodeMap := .nodeMap -}}
+{{- $graph   := .graph -}}
+{{- $props   := $node.props -}}
+
+{{- $gap := "1rem" -}}
+{{- with $props.gap -}}{{- $gap = . -}}{{- end -}}
+
+<div id="{{ $node.id }}" class="pg-columns" style="--pg-col-gap:{{ $gap | htmlEscape }};">
+  {{- range $node.children -}}
+    {{- $child := index $nodeMap . -}}
+    {{- if $child -}}
+      <div class="pg-column">
+        {{- partial "pagegraph-node.html" (dict "node" $child "nodeMap" $nodeMap "graph" $graph) -}}
+      </div>
+    {{- end -}}
+  {{- end -}}
+</div>

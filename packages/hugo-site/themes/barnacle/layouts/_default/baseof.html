@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default "en" }}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+    <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}" />
+    {{- if .IsPage }}
+    <link rel="canonical" href="{{ .Permalink }}" />
+    {{- end }}
+    <!-- Barnacle base stylesheet -->
+    <link rel="stylesheet" href="{{ "css/barnacle.css" | relURL }}" />
+    <!-- Inline styles emitted from PageGraph style definitions -->
+    {{ block "styles" . }}{{ end }}
+  </head>
+  <body>
+    <main id="content">
+      {{ block "main" . }}{{ end }}
+    </main>
+    <footer>
+      <small>Built with <a href="https://github.com/barnacle-cms/barnacle">barnacle</a></small>
+    </footer>
+  </body>
+</html>

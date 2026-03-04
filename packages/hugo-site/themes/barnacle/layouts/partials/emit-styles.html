@@ -1,0 +1,23 @@
+{{/*
+  emit-styles.html — emit a <style> block from the PageGraph styles map.
+
+  Called once per page in the <head> via the "styles" block defined in
+  baseof.html.  Iterates over graph.styles and writes a CSS rule for each
+  StyleDef.  This is purely static — no runtime JS required.
+
+  Context: the PageGraph object (same as pagegraph.html receives).
+*/}}
+{{- $graph := . -}}
+{{- $styles := $graph.styles -}}
+
+{{- if $styles -}}
+<style>
+{{- range $id, $style := $styles }}
+  .{{ $style.className }} {
+    {{- range $prop, $val := $style.css }}
+    {{ $prop }}: {{ $val }};
+    {{- end }}
+  }
+{{- end }}
+</style>
+{{- end -}}

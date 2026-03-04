@@ -1,0 +1,72 @@
+{
+  "id": "00000000-0000-4000-a000-000000000002",
+  "version": "1",
+  "meta": {
+    "title": "Sample Page",
+    "slug": "sample",
+    "lang": "en",
+    "description": "A minimal barnacle PageGraph example.",
+    "publishedAt": "2024-01-01T00:00:00Z"
+  },
+  "nodes": [
+    {
+      "id": "section-main",
+      "type": "section",
+      "props": {},
+      "children": ["heading-main", "para-intro", "divider-1", "para-body"],
+      "styleRefs": ["style-section"],
+      "parentId": null
+    },
+    {
+      "id": "heading-main",
+      "type": "heading",
+      "props": {
+        "level": 1,
+        "text": "Hello from Barnacle"
+      },
+      "children": [],
+      "styleRefs": [],
+      "parentId": "section-main"
+    },
+    {
+      "id": "para-intro",
+      "type": "paragraph",
+      "props": {
+        "text": "This page is rendered entirely from a PageGraph JSON document — no database, no server-side logic."
+      },
+      "children": [],
+      "styleRefs": [],
+      "parentId": "section-main"
+    },
+    {
+      "id": "divider-1",
+      "type": "divider",
+      "props": {},
+      "children": [],
+      "styleRefs": [],
+      "parentId": "section-main"
+    },
+    {
+      "id": "para-body",
+      "type": "paragraph",
+      "props": {
+        "text": "Edit content/pagegraphs/sample.json to update this page without touching any templates."
+      },
+      "children": [],
+      "styleRefs": [],
+      "parentId": "section-main"
+    }
+  ],
+  "styles": {
+    "style-section": {
+      "id": "style-section",
+      "className": "sample-section",
+      "css": {
+        "padding": "3rem 1rem",
+        "maxWidth": "48rem",
+        "margin": "0 auto"
+      }
+    }
+  },
+  "assets": {}
+}

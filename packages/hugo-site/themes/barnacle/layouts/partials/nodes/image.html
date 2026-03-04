@@ -1,0 +1,35 @@
+{{/*
+  nodes/image.html — renders a PageNode of type "image".
+
+  props:
+    src    (string)  — image URL (resolved against assets map if prefixed with "asset:")
+    alt    (string)  — alt text (required for accessibility)
+    width  (integer) — optional pixel width
+    height (integer) — optional pixel height
+*/}}
+{{- $node  := .node -}}
+{{- $graph := .graph -}}
+{{- $props := $node.props -}}
+
+{{- $src := "" -}}
+{{- with $props.src -}}
+  {{- $src = . -}}
+  {{- /* Resolve "asset:<id>" references to the assets map URL. */}}
+  {{- if hasPrefix $src "asset:" -}}
+    {{- $assetID := strings.TrimPrefix "asset:" $src -}}
+    {{- $asset   := index $graph.assets $assetID -}}
+    {{- if $asset -}}
+      {{- $src = $asset.url -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $alt    := "" -}}
+{{- with $props.alt    -}}{{- $alt    = . -}}{{- end -}}
+
+<img id="{{ $node.id }}"
+  src="{{ $src | htmlEscape }}"
+  alt="{{ $alt | htmlEscape }}"
+  {{- with $props.width  }} width="{{ . }}"{{ end -}}
+  {{- with $props.height }} height="{{ . }}"{{ end -}}
+  loading="lazy" />

@@ -1,0 +1,17 @@
+{{ define "main" }}
+  <div class="pg-home">
+    {{- /* If the homepage carries a pagegraph, render it; otherwise use Markdown. */}}
+    {{- with .Params.pagegraph }}
+      {{ partial "pagegraph.html" . }}
+    {{- else }}
+      <h1>{{ .Title }}</h1>
+      {{ .Content }}
+    {{- end }}
+  </div>
+{{ end }}
+
+{{ define "styles" }}
+  {{- with .Params.pagegraph }}
+    {{ partial "emit-styles.html" . }}
+  {{- end }}
+{{ end }}

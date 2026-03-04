@@ -1,0 +1,54 @@
+name: Build & Deploy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'content/**'
+      - 'packages/hugo-site/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'content/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.122.0'
+          extended: true
+      - name: Build Hugo site
+        run: |
+          cd packages/hugo-site
+          hugo --minify
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: hugo-site
+          path: packages/hugo-site/public/
+          retention-days: 30
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: hugo-site
+          path: public/
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: barnacle-site
+          directory: public/
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
