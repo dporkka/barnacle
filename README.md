@@ -5,7 +5,7 @@ without giving up Git workflows, structured content, or static site deployment. 
 Cloudflare Workers, GitHub, Hugo, Yjs collaboration, and JSON Schema validation into a Git-native
 content platform for fast, secure, SEO-friendly websites.
 
-Barnacle stores page content as structured **PageGraph JSON** in GitHub, enables collaborative
+barnacle stores page content as structured **PageGraph JSON** in GitHub, enables collaborative
 editing with **Yjs CRDTs**, and publishes static HTML through **Hugo**. The result is a visual CMS
 that keeps Git as the source of truth while delivering Jamstack performance, edge deployment, and
 portable content.
