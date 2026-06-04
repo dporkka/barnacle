@@ -2,6 +2,16 @@
   "name": "@barnacle/schema",
   "version": "1.0.0",
   "description": "PageGraph JSON Schema for barnacle CMS",
+  "keywords": [
+    "barnacle",
+    "cms",
+    "pagegraph",
+    "json-schema",
+    "typescript",
+    "content-model",
+    "validation",
+    "static-site-cms"
+  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {

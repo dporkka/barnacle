@@ -1,8 +1,55 @@
-# 🪸 barnacle — Static-First Visual CMS
+# 🪸 barnacle — Static-First Visual CMS for Git-Based Publishing
 
-A fully serverless, static-first visual CMS built on Cloudflare Workers, GitHub, and Hugo.
-Content is stored as structured JSON in Git. The canonical source of truth is always a GitHub
-repository. Pages are built into static HTML by Hugo and deployed to any CDN.
+**barnacle** is a static-first, serverless visual CMS for teams that want a modern page builder
+without giving up Git workflows, structured content, or static site deployment. It combines
+Cloudflare Workers, GitHub, Hugo, Yjs collaboration, and JSON Schema validation into a Git-native
+content platform for fast, secure, SEO-friendly websites.
+
+Barnacle stores page content as structured **PageGraph JSON** in GitHub, enables collaborative
+editing with **Yjs CRDTs**, and publishes static HTML through **Hugo**. The result is a visual CMS
+that keeps Git as the source of truth while delivering Jamstack performance, edge deployment, and
+portable content.
+
+## What barnacle is
+
+- **Git-based CMS** for structured content and version-controlled publishing
+- **Visual page builder** for static sites and content teams
+- **Serverless CMS architecture** built on Cloudflare Workers and Durable Objects
+- **Collaborative website editor** powered by Yjs real-time synchronization
+- **Static site CMS** that publishes to Hugo and any CDN-friendly hosting target
+
+## Keywords and tags
+
+`static-first cms`, `git-based cms`, `visual cms`, `serverless cms`, `jamstack cms`,
+`Cloudflare Workers CMS`, `Hugo CMS`, `GitHub CMS`, `headless visual editor`, `Yjs collaboration`,
+`real-time collaborative editing`, `PageGraph`, `JSON Schema CMS`, `edge-native publishing`,
+`static site builder`
+
+## Why this repository matters for SEO and AI discovery
+
+- Clear domain language around **static CMS**, **serverless CMS**, **Git-native CMS**, and
+  **visual editing**
+- Explicit descriptions of how the system uses **Cloudflare Workers**, **GitHub**, **Hugo**, and
+  **Yjs**
+- Structured package breakdown so search engines and AI tools can identify repository purpose
+- Architecture and workflow sections that answer common evaluator questions quickly
+
+## Core capabilities
+
+- Visual page editing with structured PageGraph content
+- Real-time collaboration through Yjs and Durable Objects
+- GitHub-backed draft, review, and publish workflow
+- Static HTML generation with Hugo for strong page performance
+- Media handling with Cloudflare R2 and immutable caching
+- Admin authentication with GitHub OAuth and Cloudflare KV sessions
+
+## Ideal use cases
+
+- Teams building a **Git-based visual CMS**
+- Developers creating a **Hugo-compatible CMS**
+- Organizations adopting a **serverless CMS on Cloudflare**
+- Projects that need **static site publishing with collaborative editing**
+- Repositories showcasing **Jamstack CMS architecture** and **AI-search-friendly documentation**
 
 ---
 

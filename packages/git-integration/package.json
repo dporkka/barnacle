@@ -1,7 +1,18 @@
 {
   "name": "@barnacle/git-integration",
   "version": "1.0.0",
+  "description": "GitHub App and Cloudflare Worker integration layer for barnacle draft, commit, and publish flows",
   "private": true,
+  "keywords": [
+    "barnacle",
+    "cms",
+    "github",
+    "git-based-cms",
+    "cloudflare-workers",
+    "publishing",
+    "pull-requests",
+    "content-workflow"
+  ],
   "scripts": {
     "build": "tsc",
     "dev": "wrangler dev",

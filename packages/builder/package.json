@@ -1,8 +1,19 @@
 {
   "name": "@barnacle/builder",
   "version": "1.0.0",
+  "description": "React and Yjs visual page builder for the barnacle static-first CMS",
   "private": true,
   "type": "module",
+  "keywords": [
+    "barnacle",
+    "cms",
+    "visual-builder",
+    "react",
+    "yjs",
+    "collaboration",
+    "page-builder",
+    "static-site-cms"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

@@ -1,7 +1,18 @@
 {
   "name": "@barnacle/admin",
   "version": "1.0.0",
+  "description": "Server-rendered Cloudflare Workers admin shell for the barnacle static-first visual CMS",
   "private": true,
+  "keywords": [
+    "barnacle",
+    "cms",
+    "admin",
+    "cloudflare-workers",
+    "htmx",
+    "serverless",
+    "git-based-cms",
+    "static-site-cms"
+  ],
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",

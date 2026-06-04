@@ -1,7 +1,18 @@
 {
   "name": "@barnacle/collaboration",
   "version": "1.0.0",
+  "description": "Cloudflare Durable Objects collaboration service for Yjs-powered barnacle editing sessions",
   "private": true,
+  "keywords": [
+    "barnacle",
+    "cms",
+    "yjs",
+    "collaboration",
+    "durable-objects",
+    "websocket",
+    "cloudflare-workers",
+    "realtime-editing"
+  ],
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",

@@ -1,7 +1,18 @@
 {
   "name": "@barnacle/media",
   "version": "1.0.0",
+  "description": "Cloudflare R2 media upload and asset delivery service for the barnacle serverless CMS",
   "private": true,
+  "keywords": [
+    "barnacle",
+    "cms",
+    "media",
+    "cloudflare-r2",
+    "cloudflare-workers",
+    "asset-pipeline",
+    "uploads",
+    "static-assets"
+  ],
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
